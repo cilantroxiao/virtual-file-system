@@ -59,12 +59,14 @@ run script.scp
 ---
 ## Repository Structure
 .
-├── src/        # Core implementation
-├── include/    # Header files
-├── lib/        # Supporting libraries
-├── tests/      # Provided test suite used for validation
-├── docs/       # Design notes and extended documentation
-└── README.md
+├── src/                # Main source code
+│   ├── components/     # UI components
+│   └── utils/          # Helper functions
+├── docs/               # Documentation files
+├── tests/              # Unit and integration tests
+├── .gitignore          # Files to ignore in Git
+└── README.md           # This file
+
 
 
 ---
