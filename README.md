@@ -55,7 +55,6 @@ The project is built using several object-oriented design patterns:
 ```bash
 touch file.txt
 cat file.txt
-# write content, then :wq
 
 ls -m
 ds file.txt
