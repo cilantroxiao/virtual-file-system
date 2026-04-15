@@ -1,97 +1,92 @@
-# Mock OS Studios/Lab
-Throughout these studios and the lab, you'll be creating a static library that
-implements a mock operating system.
-A user of this mock operating system will be able to
-create and interact with files using commands.
+# Virtual File System (C++)
 
-At each stage, you'll try out your static library by writing and running executables,
-and you'll test it by running unit tests.
+## Overview
+We implemented a command-line virtual file system in C++ for CSE332: CSE 332S: Object-Oriented Software Development. The system simulates common file system operations such as file creation, deletion, reading/writing, copying, and renaming, along with support for multiple file types and password-protected files. This project emphasizes modular design, extensibility, and clean abstraction of system components.
 
-## Directory structure
-The directory structure aims to follow best practices,
-so it will look similar to many C++ projects in the real world.
+---
 
-The idea is to separate the public interface from its implementation.
+## Features
 
-- [docs/](./docs)
-  - This directory contains the markdown files in which you'll answer
-    the studio questions and write your lab README.
+### Core Commands
+- `touch` — Create files (`.txt`, `.img`, `.scp`)
+- `ls` — List directory contents (supports metadata flag `-m`)
+- `cat` — Write to or append file contents (`-a`)
+- `ds` — Display file contents (formatted or raw)
+- `cp` — Copy files (preserves content and passwords)
+- `rm` — Remove files
+- `rn` — Rename files
+- `help` — Display available commands and usage
 
-- [include/](./include)
-  - This directory contains the public header files for the static library.
-  - They are placed within the inner directory `mockos/`,
-    so when including them from source files, prefix the filename with `mockos/`.
-    For example, if you wanted to use TextFile, you would type
-    `#include "mockos/TextFile.h"`.
-  - The prefix is not necessary when
-    you're including a header file from another header file that's inside `include/mockos/`.
-- [lib/](./lib)
-  - This directory contains the source files for the implementation of the static library.
-  - Like `include/`, the files are placed within an inner `mockos/` directory.
-- [src/](./src)
-  - This directory contains the source files for the executable code.
-  - There's a source file for each studio and the lab.
-- [tests/](./tests)
-  - This directory contains the unit tests.
-  - Since the tests are already written for you, you will not need to modify the files in this directory.
+### File Types
+- **Text files (`.txt`)**
+- **Image files (`.img`)**
+  - Stored as formatted pixel grids
+- **Script files (`.scp`)**
+  - Store sequences of commands for execution
 
-## Workflow
-The workflow for each studio is similar.
+### Advanced Features
+- Password-protected files via a **Proxy pattern**
+- Command system implemented using the **Command pattern**
+- File creation handled through a **Factory pattern**
+- File display implemented using the **Visitor pattern**
+- Macro command (`tcd`) combining touch → cat → display
+- Script execution via `run` command
 
-### Answering the studio's questions
-While you go through the studio, write your answers to the studio's questions in the associated Markdown file.
-As an example, for Studio 16, write your answers in `docs/studio16.md`.
+---
 
-### Implementing part of the static library
-First, you'll implement the part of the static library
-specified by the studio instructions.
+## Design Highlights
 
-When implementing a class, fill in its header file in `include/mockos/`,
-and fill in its source file in `lib/mockos/`.
+### Object-Oriented Architecture
+The system is built with modular, decoupled components, allowing new commands and file types to be added with minimal changes.
 
-When you're writing the header file, you can include other header files in `include/mockos/` without the `mockos/` prefix.
-For example, when writing the header file for `TextFile` in `include/mockos/TextFile.h`, you'd include AbstractFile like this:
-```c++
-#include "AbstractFile"
+### Command Pattern
+Each command is encapsulated as an object with a uniform interface, enabling flexible command execution and extension.
+
+### Factory Pattern
+A file factory dynamically creates file objects based on file extensions.
+
+### Proxy Pattern
+Password-protected files are wrapped in a proxy that enforces authentication before access.
+
+### Visitor Pattern
+Supports multiple display formats (basic vs metadata) without modifying file classes.
+
+---
+
+## Example Usage
+
+```bash
+touch file.txt
+cat file.txt
+# write content, then :wq
+
+ls -m
+ds file.txt
+
+cp file.txt copy
+rn file.txt newname
+rm copy.txt
 ```
 
-However, when you're writing the source file, you must add the `mockos/` prefix.
-For example, when writing the source file for `TextFile` in `lib/mockos/TextFile.cpp`, you'd include its own header file like this:
-```c++
-#include "mockos/TextFile.h"
+---
+
+## Script Execution
+```bash
+run script.scp
 ```
 
-### Trying out the newly implemented methods
-To try out the newly implemented methods,
-you'll then write a main method in the studio's source file in `src/`.
+---
+## Repository Structure
+.
+├── src/        # Core implementation
+├── include/    # Header files
+├── lib/        # Supporting libraries
+├── tests/      # Provided test suite used for validation
+├── docs/       # Design notes and extended documentation
+└── README.md
 
-We have created executable targets for each studio.
-Just write the main method in the studio's source file,
-and you can run the corresponding target.
+---
 
-For example, when you're working on studio 16,
-you'd write a main method in `src/Studio16.cpp`.
-Then, you can run the `studio16` target.
-
-In CLion, you can choose the target by
-opening the Run Configurations dropdown menu.
-
-In VS, you can choose the target by
-switching to CMake Targets View.
-
-### Running the unit tests
-Finally, you'll run the unit tests to check that everything works as we expect.
-
-To run a studio's unit tests, run the Google Test target corresponding to that studio.
-For example, for studio 16, run the `teststudio16` target.
-
-## Lab tips
-### Adding new files
-We've configured CMake to find the header and source files with globs.
-As a consequence, when you add new files, you'll need to reload the CMake project
-for them to be added to the static library.
-
-In CLion, right-click the top-level CMakeLists.txt
-and choose "Reload CMake Project".
-
-In VS, choose File > Open > CMake and select the top-level CMakeLists.txt.
+## Contributors
+- Sandro Xiao
+- Nicole Dai
