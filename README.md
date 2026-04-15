@@ -34,25 +34,6 @@ We implemented a command-line virtual file system in C++ for CSE332: CSE 332S: O
 
 ---
 
-## Design Highlights
-
-### Object-Oriented Architecture
-The system is built with modular, decoupled components, allowing new commands and file types to be added with minimal changes.
-
-### Command Pattern
-Each command is encapsulated as an object with a uniform interface, enabling flexible command execution and extension.
-
-### Factory Pattern
-A file factory dynamically creates file objects based on file extensions.
-
-### Proxy Pattern
-Password-protected files are wrapped in a proxy that enforces authentication before access.
-
-### Visitor Pattern
-Supports multiple display formats (basic vs metadata) without modifying file classes.
-
----
-
 ## Example Usage
 
 ```bash
