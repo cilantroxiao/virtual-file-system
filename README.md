@@ -1,36 +1,51 @@
-# Virtual File System (C++)
+# Virtual File System (C++) with Command-Line Shell Architecture
 
 ## Overview
-We implemented a command-line virtual file system in C++ for CSE332: CSE 332S: Object-Oriented Software Development. The system simulates common file system operations such as file creation, deletion, reading/writing, copying, and renaming, along with support for multiple file types and password-protected files. This project emphasizes modular design, extensibility, and clean abstraction of system components.
+We implemented a virtual file system and command-line shell in C++ for CSE332: CSE 332S: Object-Oriented Software Development. The system simulates common file system operations such as file creation, deletion, reading/writing, copying, and renaming, along with support for multiple file types and password-protected files. The system is designed to mimic core operating system concepts such as file abstraction, command dispatching, and extensible runtime behavior.
 
 ---
 
 ## Features
+### File System
+- In-memory file system
+- Supports multiple file types:
+  - Text files (`.txt`)
+  - Image files (`.img`)
+  - Script files (`.scp`)
 
-### Core Commands
-- `touch` — Create files (`.txt`, `.img`, `.scp`)
-- `ls` — List directory contents (supports metadata flag `-m`)
-- `cat` — Write to or append file contents (`-a`)
-- `ds` — Display file contents (formatted or raw)
-- `cp` — Copy files (preserves content and passwords)
-- `rm` — Remove files
-- `rn` — Rename files
-- `help` — Display available commands and usage
+### Commands
+The system runs through a command prompt and supports:
+- `touch` — create a file
+- `cat` — write to or append a file
+- `ds` — display file contents
+- `ls` — list files (with optional metadata)
+- `cp` — copy files
+- `rm` — remove files
+- `rn` — rename files
+- `run` — execute script files
+- `help` — show available commands
+## Additional Features
 
-### File Types
-- **Text files (`.txt`)**
-- **Image files (`.img`)**
-  - Stored as formatted pixel grids
-- **Script files (`.scp`)**
-  - Store sequences of commands for execution
+### Password-Protected Files
+Files can optionally be protected with a password. Accessing them requires authentication before read/write operations.
 
-### Advanced Features
-- Password-protected files via a **Proxy pattern**
-- Command system implemented using the **Command pattern**
-- File creation handled through a **Factory pattern**
-- File display implemented using the **Visitor pattern**
-- Macro command (`tcd`) combining touch → cat → display
-- Script execution via `run` command
+### Script Files
+Script files (`.scp`) store a list of commands. The `run` command executes them line by line like a simple automation script.
+
+### Macro Commands
+Some commands combine multiple operations together. For example:
+- `tcd` = touch → cat → display
+- `rn` = copy → remove (rename behavior)
+
+---
+
+## Design
+The project is built using several object-oriented design patterns:
+- **Command Pattern** — each command is implemented as its own class
+- **Factory Pattern** — used to create different file types
+- **Proxy Pattern** — used for password-protected files
+- **Visitor Pattern** — used for different ways of displaying files
+- **Macro Commands** — combine multiple commands into one
 
 ---
 
@@ -48,27 +63,18 @@ cp file.txt copy
 rn file.txt newname
 rm copy.txt
 ```
-
----
-
-## Script Execution
-```bash
-run script.scp
-```
-
 ---
 ## Repository Structure
-.
-├── src/                # Main source code
-│   ├── components/     # UI components
-│   └── utils/          # Helper functions
-├── docs/               # Documentation files
-├── tests/              # Unit and integration tests
-├── .gitignore          # Files to ignore in Git
-└── README.md           # This file
-
-
-
+```bash
+├── src             # Entry point for each lab. Lab5.cpp
+├── include         # Core implementation of system, file types, commands
+├── lib             # Hader files for abstract classes and interfaces
+├── provided_tests  # Provided course test suite (no modification)
+├── docs            # Notes and documentation for class submission
+    └── archive     # Other notes for past checkpoint submissions
+├── CMakeLists.txt
+└── README.md  
+```
 ---
 
 ## Contributors
