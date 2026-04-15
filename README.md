@@ -1,7 +1,8 @@
-# Virtual File System (C++) with Command-Line Shell Architecture
+# Virtual File System and Command-Line Shell in C++
 
 ## Overview
-We implemented a virtual file system and command-line shell in C++ for CSE332: CSE 332S: Object-Oriented Software Development. The system simulates common file system operations such as file creation, deletion, reading/writing, copying, and renaming, along with support for multiple file types and password-protected files. The system is designed to mimic core operating system concepts such as file abstraction, command dispatching, and extensible runtime behavior.
+We implemented a virtual file system and command-line shell in C++ for CSE332: Object-Oriented Software Development at Washington University in St. Louis. The project simulates common file system operations such as creating, deleting, reading/writing, copying, and renaming files, and supports multiple file types as well as password-protected files. \
+The system is designed around core operating system concepts, including file abstraction, command dispatching, and extensible runtime behavior through a modular command architecture.
 
 ---
 
